@@ -60,6 +60,12 @@ $(function () {
                 // Log the forecast data to the console
                 data.currentWeatherPromise.then(function (currentWeatherData) {
                     console.log("Current Weather Data:", currentWeatherData);
+                    $('#current-city').text(currentWeatherData.name);
+                    $('#current-date').text(today.format('MMM D, YYYY'));
+                    //$('#current-weather-icon')STILL WORKING ON THIS
+                    $('#current-temp').text("Temp: " + currentWeatherData.main.temp + " °F")
+                    $('#current-wind').text("Wind: " + currentWeatherData.wind.speed + " MPH");
+                    $('#current-humidity').text("Humidity: " + currentWeatherData.main.humidity +"%");
                 });
 
                 // Log the current weather data to the console
