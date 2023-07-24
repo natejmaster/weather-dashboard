@@ -23,20 +23,22 @@ $(function () {
             })
             //Then, a function runs the returned object data through a function that isolates the lat and lon data from the object pulled from the API
             .then(function (data) {
-                const { lat, lon } = data[0];
+                let { lat, lon } = data[0];
                 //Another template literal API url is called using the lat and lon values extracted earlier
-                const weatherApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=03829b78f9fbd15989252f9ded900d22`;
-                return weatherApiUrl;
+                let forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=03829b78f9fbd15989252f9ded900d22`;
+                let currentWeatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=03829b78f9fbd15989252f9ded900d22`;
+                //Finally, declare variables that will fetch requests from both of these APIs and return them as an object containing both promises.
+                let currentWeatherPromise = fetch(currentWeatherApiUrl).then(response => response.json());
+                let forecastPromise = fetch(forecastApiUrl).then(response => response.json());
+                return { currentWeatherPromise, forecastPromise };
             })
             //If the fetch is unsuccesful, the console logs an error message.
             .catch(function (error) {
                 console.log(error);
             });
     }
-    //Use lat and long in function to call weatherApi
-    //Fetch response from weatherApi
-    //Fetch data from response
-    //Use data to populate html containers
+
+        //Use data to populate html containers
     //Populate current-header
     //Current location name
     //Current date
@@ -51,30 +53,23 @@ $(function () {
     //Append forecast cards to five-day-forecast container
     //Event listener for the search button
     searchButton.on('click', function () {
-        //The findCoords function constructed above is called after the button is clicked
+        //Calls the original function that produces the lat and long and converts them into the promised object data
         findCoords()
-        .then(function (weatherApiUrl) {
-            // User fetches the weatherApiUrl variable established earlier to make the API call for weather data
-            fetch(weatherApiUrl)
-              .then(function (response) {
-                //If the response is successful, the JSON data is returned, if not, it throws an error
-                if (response.ok) {
-                  return response.json();
-                } else {
-                  throw new Error('Error: ' + response.status);
-                }
-              })
-              //Finally, the data is logged in the console.
-              .then(function (data) {
-                // Process the weather data
-                console.log(data);
-              })
-              .catch(function (error) {
+            //Next, a function takes the data and logs both the forecast data and the current weather data to the console.
+            .then(function (data) {
+                // Log the forecast data to the console
+                data.currentWeatherPromise.then(function (currentWeatherData) {
+                    console.log("Current Weather Data:", currentWeatherData);
+                });
+
+                // Log the current weather data to the console
+                data.forecastPromise.then(function (forecastData) {
+                    console.log("Forecast Data:", forecastData);
+                });
+            })
+            //Throws an error if the data can't be called
+            .catch(function (error) {
                 console.log(error);
-              });
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-      });
+            });
     });
+});
