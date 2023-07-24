@@ -25,8 +25,8 @@ $(function () {
             .then(function (data) {
                 let { lat, lon } = data[0];
                 //Another template literal API url is called using the lat and lon values extracted earlier
-                let forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=03829b78f9fbd15989252f9ded900d22`;
-                let currentWeatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=03829b78f9fbd15989252f9ded900d22`;
+                let forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=03829b78f9fbd15989252f9ded900d22&units=imperial`;
+                let currentWeatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=03829b78f9fbd15989252f9ded900d22&units=imperial`;
                 //Finally, declare variables that will fetch requests from both of these APIs and return them as an object containing both promises.
                 let currentWeatherPromise = fetch(currentWeatherApiUrl).then(response => response.json());
                 let forecastPromise = fetch(forecastApiUrl).then(response => response.json());
