@@ -79,9 +79,15 @@ $(function () {
                         let dayDate = document.createElement('h4');
                         dayDate.textContent = today.add(i + 1, 'day').format('MMM D, YYYY');
                         let dayTemp = document.createElement('p');
-                        dayTemp.textContent = "Temp: " + forecastData.list[forecastIndex + (i * 8)].main.temp;
+                        dayTemp.textContent = "Temp: " + forecastData.list[forecastIndex + (i * 8)].main.temp + " °F";
+                        let dayWind = document.createElement('p');
+                        dayWind.textContent = "Wind: " + forecastData.list[forecastIndex + (i * 8)].wind.speed + " MPH";
+                        let dayHumidity = document.createElement('p');
+                        dayHumidity.textContent = "Humidity: " + forecastData.list[forecastIndex + (i * 8)].main.humidity + "%";
                         dayCard.append(dayDate);
                         dayCard.append(dayTemp);
+                        dayCard.append(dayWind);
+                        dayCard.append(dayHumidity);
                         fiveDayContainer.append(dayCard);
                     }
                 });
