@@ -73,11 +73,15 @@ $(function () {
                 data.forecastPromise.then(function (forecastData) {
                     console.log("Forecast Data:", forecastData);
                     for (let i = 0; i < 5; i++) {
+                        let forecastIndex = 4;
                         let dayCard = document.createElement('div');
                         dayCard.id = `day-${i}`;
                         let dayDate = document.createElement('h4');
                         dayDate.textContent = today.add(i + 1, 'day').format('MMM D, YYYY');
+                        let dayTemp = document.createElement('p');
+                        dayTemp.textContent = "Temp: " + forecastData.list[forecastIndex + (i * 8)].main.temp;
                         dayCard.append(dayDate);
+                        dayCard.append(dayTemp);
                         fiveDayContainer.append(dayCard);
                     }
                 });
