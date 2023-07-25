@@ -5,6 +5,7 @@ $(function () {
     let locationSearch = $('#location-search');
     let searchButton = $('#location-search-button');
     let searchHistory = $('#search-history');
+    let fiveDayContainer = $('#five-day-forecast-container')
 
     //The function findCoords runs the location name through OpenWeatherMap's reverse geocoder API
     function findCoords() {
@@ -38,7 +39,7 @@ $(function () {
             });
     }
 
-        //Use data to populate html containers
+    //Use data to populate html containers
     //Populate current-header
     //Current location name
     //Current date
@@ -62,15 +63,23 @@ $(function () {
                     console.log("Current Weather Data:", currentWeatherData);
                     $('#current-city').text(currentWeatherData.name);
                     $('#current-date').text(today.format('MMM D, YYYY'));
-                    //$('#current-weather-icon')STILL WORKING ON THIS
+                    //STILL WORKING ON IT $('#current-weather-icon').text(currentWeatherData.weather)
                     $('#current-temp').text("Temp: " + currentWeatherData.main.temp + " °F")
                     $('#current-wind').text("Wind: " + currentWeatherData.wind.speed + " MPH");
-                    $('#current-humidity').text("Humidity: " + currentWeatherData.main.humidity +"%");
+                    $('#current-humidity').text("Humidity: " + currentWeatherData.main.humidity + "%");
                 });
 
                 // Log the current weather data to the console
                 data.forecastPromise.then(function (forecastData) {
                     console.log("Forecast Data:", forecastData);
+                    for (let i = 0; i < 5; i++) {
+                        let dayCard = document.createElement('div');
+                        dayCard.id = `day-${i}`;
+                        let dayDate = document.createElement('h4');
+                        dayDate.textContent = today.add(i + 1, 'day').format('MMM D, YYYY');
+                        dayCard.append(dayDate);
+                        fiveDayContainer.append(dayCard);
+                    }
                 });
             })
             //Throws an error if the data can't be called
