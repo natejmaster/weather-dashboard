@@ -6,6 +6,7 @@ $(function () {
     let searchButton = $('#location-search-button');
     let searchHistory = $('#search-history');
     let fiveDayContainer = $('#five-day-forecast-container')
+    let storedCities = [];
 
     //The function findCoords runs the location name through OpenWeatherMap's reverse geocoder API
     function findCoords() {
@@ -38,23 +39,28 @@ $(function () {
                 console.log(error);
             });
     }
-
-    //Use data to populate html containers
-    //Populate current-header
-    //Current location name
-    //Current date
-    //Current weather icon
-    //Populate current-conditions
-    //Current temp
-    //Current wind
-    //Current humidity
-    //Populate five-day-forecast
-    //Create elements for five day forecast cards
-    //Populate Data
-    //Append forecast cards to five-day-forecast container
+    function renderStoredCities() {
+        searchHistory.empty();
+        for (let i = 0; i < storedCities.length; i++) {
+            let storedCity = storedCities[i];
+            let storedCityButton = $('<button>').text(storedCity);
+            searchHistory.append(storedCityButton);
+        }
+    }
+    function saveCities() {
+        localStorage.setItem('storedCities', JSON.stringify(storedCities));
+        renderStoredCities();
+    };
     //Event listener for the search button
     searchButton.on('click', function () {
-        //Clears any pre-existing data from the page
+        let searchText = locationSearch.val().trim();
+        if (searchText === "") {
+            return;
+        }
+        storedCities.push(searchText);
+
+        saveCities();
+        //Clears any pre-existing data from the current weather and five day forecast spaces
         $('#current-city').empty();
         $('#current-date').empty();
         $('#current-weather-icon').attr('src', '');
@@ -62,6 +68,8 @@ $(function () {
         $('#current-wind').empty();
         $('#current-humidity').empty();
         fiveDayContainer.empty();
+
+        let currentWeatherDate = dayjs();
         //Calls the original function that produces the lat and long and converts them into the promised object data
         findCoords()
             //Next, a function takes the data and logs both the forecast data and the current weather data to the console.
@@ -71,40 +79,42 @@ $(function () {
                     console.log("Current Weather Data:", currentWeatherData);
                     let iconCode = currentWeatherData.weather[0].icon;
                     let iconUrl = `https://openweathermap.org/img/w/${iconCode}.png`;
-                    let weatherIconImg = document.querySelector('#current-weather-icon');
                     $('#current-city').text(currentWeatherData.name);
                     $('#current-date').text(today.format('MMM D, YYYY'));
-                    weatherIconImg.src = iconUrl;
+                    $('#current-weather-icon').attr('src', iconUrl);
                     $('#current-temp').text("Temp: " + currentWeatherData.main.temp + " °F");
                     $('#current-wind').text("Wind: " + currentWeatherData.wind.speed + " MPH");
                     $('#current-humidity').text("Humidity: " + currentWeatherData.main.humidity + "%");
+                    locationSearch.val('');
                 });
 
                 // Log the current weather data to the console
                 data.forecastPromise.then(function (forecastData) {
                     console.log("Forecast Data:", forecastData);
                     for (let i = 0; i < 5; i++) {
-                        let forecastIndex = 4;
-                        let dayCard = document.createElement('div');
-                        dayCard.id = `day-${i}`;
-                        let dayDate = document.createElement('h4');
-                        dayDate.textContent = today.add(i + 1, 'day').format('MMM D, YYYY');
-                        let iconCode = forecastData.list[forecastIndex + (i * 8)].weather[0].icon;
-                        let iconUrl = `https://openweathermap.org/img/w/${iconCode}.png`;
-                        let dayIcon = document.createElement('img');
-                        dayIcon.src = iconUrl;
-                        let dayTemp = document.createElement('p');
-                        dayTemp.textContent = "Temp: " + forecastData.list[forecastIndex + (i * 8)].main.temp + " °F";
-                        let dayWind = document.createElement('p');
-                        dayWind.textContent = "Wind: " + forecastData.list[forecastIndex + (i * 8)].wind.speed + " MPH";
-                        let dayHumidity = document.createElement('p');
-                        dayHumidity.textContent = "Humidity: " + forecastData.list[forecastIndex + (i * 8)].main.humidity + "%";
-                        dayCard.append(dayDate);
-                        dayCard.append(dayIcon);
-                        dayCard.append(dayTemp);
-                        dayCard.append(dayWind);
-                        dayCard.append(dayHumidity);
-                        fiveDayContainer.append(dayCard);
+                      let forecastIndex = 4;
+                      let forecastDate = currentWeatherDate.add(i + 1, 'day');
+                      let dayDate = forecastDate.format('MMM D, YYYY');
+                      let iconCode = forecastData.list[forecastIndex + (i * 8)].weather[0].icon;
+                      let iconUrl = `https://openweathermap.org/img/w/${iconCode}.png`;
+                      let dayTemp = "Temp: " + forecastData.list[forecastIndex + (i * 8)].main.temp + " °F";
+                      let dayWind = "Wind: " + forecastData.list[forecastIndex + (i * 8)].wind.speed + " MPH";
+                      let dayHumidity = "Humidity: " + forecastData.list[forecastIndex + (i * 8)].main.humidity + "%";
+            
+                      // Create and append forecast card using jQuery
+                      let dayCard = $('<div>').attr('id', `day-${i}`);
+                      let dayDateElement = $('<h4>').text(dayDate);
+                      let dayIcon = $('<img>').attr('src', iconUrl);
+                      let dayTempElement = $('<p>').text(dayTemp);
+                      let dayWindElement = $('<p>').text(dayWind);
+                      let dayHumidityElement = $('<p>').text(dayHumidity);
+            
+                      dayCard.append(dayDateElement);
+                      dayCard.append(dayIcon);
+                      dayCard.append(dayTempElement);
+                      dayCard.append(dayWindElement);
+                      dayCard.append(dayHumidityElement);
+                      fiveDayContainer.append(dayCard);
                     }
                 });
             })
