@@ -61,10 +61,13 @@ $(function () {
                 // Log the forecast data to the console
                 data.currentWeatherPromise.then(function (currentWeatherData) {
                     console.log("Current Weather Data:", currentWeatherData);
+                    let iconCode = currentWeatherData.weather[0].icon;
+                    let iconUrl = `https://openweathermap.org/img/w/${iconCode}.png`;
+                    let weatherIconImg = document.querySelector('#current-weather-icon');
                     $('#current-city').text(currentWeatherData.name);
                     $('#current-date').text(today.format('MMM D, YYYY'));
-                    //STILL WORKING ON IT $('#current-weather-icon').text(currentWeatherData.weather)
-                    $('#current-temp').text("Temp: " + currentWeatherData.main.temp + " °F")
+                    weatherIconImg.src = iconUrl;
+                    $('#current-temp').text("Temp: " + currentWeatherData.main.temp + " °F");
                     $('#current-wind').text("Wind: " + currentWeatherData.wind.speed + " MPH");
                     $('#current-humidity').text("Humidity: " + currentWeatherData.main.humidity + "%");
                 });
