@@ -54,6 +54,14 @@ $(function () {
     //Append forecast cards to five-day-forecast container
     //Event listener for the search button
     searchButton.on('click', function () {
+        //Clears any pre-existing data from the page
+        $('#current-city').empty();
+        $('#current-date').empty();
+        $('#current-weather-icon').attr('src', '');
+        $('#current-temp').empty();
+        $('#current-wind').empty();
+        $('#current-humidity').empty();
+        fiveDayContainer.empty();
         //Calls the original function that produces the lat and long and converts them into the promised object data
         findCoords()
             //Next, a function takes the data and logs both the forecast data and the current weather data to the console.
