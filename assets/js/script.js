@@ -81,6 +81,10 @@ $(function () {
                         dayCard.id = `day-${i}`;
                         let dayDate = document.createElement('h4');
                         dayDate.textContent = today.add(i + 1, 'day').format('MMM D, YYYY');
+                        let iconCode = forecastData.list[forecastIndex + (i * 8)].weather[0].icon;
+                        let iconUrl = `https://openweathermap.org/img/w/${iconCode}.png`;
+                        let dayIcon = document.createElement('img');
+                        dayIcon.src = iconUrl;
                         let dayTemp = document.createElement('p');
                         dayTemp.textContent = "Temp: " + forecastData.list[forecastIndex + (i * 8)].main.temp + " °F";
                         let dayWind = document.createElement('p');
@@ -88,6 +92,7 @@ $(function () {
                         let dayHumidity = document.createElement('p');
                         dayHumidity.textContent = "Humidity: " + forecastData.list[forecastIndex + (i * 8)].main.humidity + "%";
                         dayCard.append(dayDate);
+                        dayCard.append(dayIcon);
                         dayCard.append(dayTemp);
                         dayCard.append(dayWind);
                         dayCard.append(dayHumidity);
