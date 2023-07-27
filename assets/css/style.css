@@ -1,19 +1,15 @@
+/*Styling for header */
 header {
     text-align: center;
     background-color: darkblue;
     color: white;
     border: solid black;
 }
-
+/* These CSS stylings dictate how the containers and cards will be styled as they populate */
 .forecast-container {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-}
-
-#side-column {
-    display: flex;
-    flex-direction: column;
 }
 
 #current-day-container {
@@ -32,7 +28,7 @@ header {
     background-color: darkblue;
     color: white;
 }
-
+/*Simple media query that changes how forecast data is displayed on mobile devices or small screens */
 @media screen and (max-width: 576px) {
     .forecast-container {
       flex-direction: column;

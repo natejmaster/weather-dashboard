@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <!--The charset and viewport are established. This app's personal css document is linked as well as documentation for dayjs, jquery, and bootstrap-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/style.css" />
@@ -14,10 +15,13 @@
 </head>
 
 <body>
+    <!--The header of the document is included, which allows styling in CSS-->
     <header>
         <h1>Weather Dashboard</h1>
     </header>
+    <!--The main element contains the entirety of the search history, search inputs, and containers to be populated upon search-->
     <main>
+        <!--Bootstrap classes are used to place elements of UI within the page-->
         <div class= "row">
             <div class= "col-12 col-md-4 col-lg-3">
                 <h4>Search History:</h4>
@@ -31,6 +35,7 @@
                 <button id="location-search-button">Search</button>
             </div>
         </div>
+        <!--These elements are created so the application understands where to populate the current weather data in relation to forecast data-->
         <div class="row" id="current-day-container">
             <div class="col text-center" id="current-header">
                 <h3 id="current-city"></h3>
@@ -43,9 +48,11 @@
                 <p id="current-humidity">Humidity: </p>
             </div>
         </div>
+        <!--The forecast data container is empty because each dayCard will be created and rendered through the JavaScript. Establishing this container with a clear class and id aids in the CSS styling of the dayCards-->
         <div id="five-day-forecast-container" class="forecast-container">
         </div>
     </main>
+    <!--References to jquery, dayjs, and this app's js document are the last elements to load in the html-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
         integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>
