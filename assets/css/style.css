@@ -3,6 +3,7 @@ header {
     background-color: darkblue;
     color: white;
 }
+
 .forecast-container {
     display: flex;
     flex-direction: row;
@@ -13,13 +14,25 @@ header {
     display: flex;
     flex-direction: column;
 }
+
 #current-day-container {
     display: flex;
     flex-direction: row;
+    border: solid;
+    background-color: darkblue;
+    color: white;
 }
+
 .day-card {
     border: solid black;
     padding: 10px;
     background-color: darkblue;
     color: white;
 }
+
+@media screen and (max-width: 576px) {
+    .forecast-container {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
