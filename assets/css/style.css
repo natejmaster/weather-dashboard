@@ -2,6 +2,7 @@ header {
     text-align: center;
     background-color: darkblue;
     color: white;
+    border: solid black;
 }
 
 .forecast-container {
@@ -18,8 +19,10 @@ header {
 #current-day-container {
     display: flex;
     flex-direction: row;
-    border: solid;
+    border: solid black;
     background-color: darkblue;
+    margin-top: 10px;
+    margin-bottom: 10px;
     color: white;
 }
 
