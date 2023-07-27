@@ -103,6 +103,7 @@ $(function () {
             
                       // Create and append forecast card using jQuery
                       let dayCard = $('<div>').attr('id', `day-${i}`);
+                      dayCard.attr('class', `day-card`);
                       let dayDateElement = $('<h4>').text(dayDate);
                       let dayIcon = $('<img>').attr('src', iconUrl);
                       let dayTempElement = $('<p>').text(dayTemp);
