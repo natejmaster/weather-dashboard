@@ -38,8 +38,11 @@ $(function () {
     function renderStoredCities() {
         searchHistory.empty();
         for (const storedCity of storedCities) {
-            const storedCityButton = $('<button>').text(storedCity).attr('class', 'history-button');
-            searchHistory.append(storedCityButton);
+            const existingButton = searchHistory.find('.history-button').filter((_, el) => el.textContent === storedCity);
+            if (existingButton.length === 0) {
+                const storedCityButton = $('<button>').text(storedCity).attr('class', 'history-button');
+                searchHistory.append(storedCityButton);
+            }
         }
     }
 
