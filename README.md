@@ -11,6 +11,7 @@ Once this developer was able to successfully call this data, the second skill ut
 
 Finally, the app's acceptance criteria also required that the developer utilize user-side storage (like localStorage) to save previous searches in a manner that could recall and repopulate previously accessed data relatively quickly. The developer utilized a combination of localStorage and JS rendering to create the requested functionality.
 
-Link to deployed application: 
+Link to deployed application: https://natejmaster.github.io/weather-dashboard/
 
+Screenshot of deployed application:
 ![Screenshot](./assets/images/screenshot.png)

@@ -5,6 +5,9 @@ header {
     color: white;
     border: solid black;
 }
+#forecast-header {
+    text-align: center;
+}
 /* These CSS stylings dictate how the containers and cards will be styled as they populate */
 .forecast-container {
     display: flex;
